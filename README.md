@@ -1,6 +1,10 @@
 # 🏴‍☠️ Luffy Panel
 
-A lightweight VLESS-over-WebSocket proxy panel built with FastAPI, deployable on [Render](https://render.com).
+A lightweight VLESS-over-WebSocket proxy panel built with FastAPI, deployable on [Render](https://render.com) or [Railway](https://railway.app).
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/luffy-sh-op/LUFFY_PANEL)
+&nbsp;&nbsp;
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/luffy-sh-op/LUFFY_PANEL)
 
 ---
 
@@ -36,6 +40,8 @@ A lightweight VLESS-over-WebSocket proxy panel built with FastAPI, deployable on
 
 ### One-click via `render.yaml`
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/luffy-sh-op/LUFFY_PANEL)
+
 1. Fork or push this repo to GitHub.
 2. Go to [render.com](https://render.com) → **New Web Service** → connect your repo.
 3. Render will auto-detect `render.yaml` and configure everything.
@@ -51,6 +57,61 @@ A lightweight VLESS-over-WebSocket proxy panel built with FastAPI, deployable on
 | **Build Command** | `pip install -r requirements.txt` |
 | **Start Command** | `python main.py` |
 
+### 🌐 Render & Cloudflare Clean IPs
+
+> **This panel on Render routes through Cloudflare's clean IPs exclusively.**
+>
+> Render's infrastructure sits behind Cloudflare's network, so all VLESS+WS configs will automatically use **Cloudflare clean IP ranges** — which are generally unblocked and stable in restricted regions.
+>
+> ✅ Use the panel URL directly — Cloudflare CDN handles routing automatically.
+>
+> If configs don't connect, try manually entering a known Cloudflare clean IP (e.g. `104.21.x.x` or `172.67.x.x`) in your client instead of the hostname.
+
+---
+
+## 🚂 Deploy on Railway
+
+### One-click deploy
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/luffy-sh-op/LUFFY_PANEL)
+
+1. Fork or push this repo to GitHub.
+2. Go to [railway.app](https://railway.app) → **New Project** → **Deploy from GitHub repo** → select your repo.
+3. Wait for the deployment to finish. You'll be given a URL — that's your service domain. To access the panel, just add `/login` to the end of your domain.
+
+### ⚠️ Railway IP Addresses
+
+> **Railway does NOT use Cloudflare. It uses its own dedicated IP ranges.**
+>
+> Railway's outbound IPs typically fall in the range **`69.46.46.x`**, so your configs will use Railway's own IPs — not Cloudflare's. These may or may not be accessible depending on your network restrictions.
+>
+> **If configs don't work on Railway:**
+> 1. Check whether the `69.46.46.x` range is reachable from your network.
+> 2. Enable **Fragment Mode** in your v2ray / v2rayNG client (see section below).
+> 3. Switch to Render for Cloudflare clean IP routing.
+
+---
+
+## 🔧 Fragment Mode (v2rayNG / v2ray)
+
+If your configurations are not connecting — especially on Railway — enable **Fragment Mode** in your client:
+
+**v2rayNG (Android):**
+1. Go to **Settings → Fragment**
+2. Enable Fragment and set: Packets `tlshello`, Length `10-30`, Interval `10-20`
+3. Reconnect
+
+**v2ray (Desktop):** Add to your `outbound` → `streamSettings`:
+
+```json
+"sockopt": {
+  "dialerProxy": "fragment",
+  "tcpKeepAliveIdle": 100
+}
+```
+
+Fragment mode splits the TLS ClientHello packet to bypass deep packet inspection (DPI) firewalls.
+
 ---
 
 ## ▶️ Run Locally
@@ -62,7 +123,7 @@ python main.py
 
 Panel will be available at: `http://localhost:8000/login`
 
-> After deploying on Render, access your panel at: `https://yourdomain/login`
+> After deploying on Render or Railway, access your panel at: `https://yourdomain/login`
 
 ---
 
@@ -87,6 +148,16 @@ websockets==12.0
 httpx==0.25.1
 psutil==5.9.6
 ```
+
+---
+
+## 📌 Static IPs
+
+| Platform | Static IP? | Notes |
+|---|---|---|
+| **Render** (Free) | ❌ No | Shared Cloudflare IPs; clean and stable |
+| **Render** (Paid) | ✅ Yes | Available on Starter plan and above |
+| **Railway** | ✅ Optional | Enable via Settings → Networking → Static IP (paid feature) |
 
 ---
 
@@ -166,19 +237,35 @@ vless://<uuid>@<domain>:443?encryption=none&security=tls&type=ws&host=<domain>&p
 
 ---
 
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to your branch: `git push origin feature/amazing-feature`
+5. Open a **Pull Request**
+
+---
+
 ## 📄 License
 
 MIT — use freely, modify as needed.
 
 ---
----
----
 
-[My telegram channel](https://t.me/Luffy_sh_op).
+[My Telegram channel](https://t.me/Luffy_sh_op)
+
+---
+---
+---
 
 # 🏴‍☠️ لوفی پنل
 
-یک پنل پراکسی سبک VLESS-over-WebSocket ساخته‌شده با FastAPI، قابل استقرار روی [Render](https://render.com).
+یک پنل پراکسی سبک VLESS-over-WebSocket ساخته‌شده با FastAPI، قابل استقرار روی [Render](https://render.com) یا [Railway](https://railway.app).
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/luffy-sh-op/LUFFY_PANEL)
+&nbsp;&nbsp;
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/luffy-sh-op/LUFFY_PANEL)
 
 ---
 
@@ -214,6 +301,8 @@ MIT — use freely, modify as needed.
 
 ### یک‌کلیکی با `render.yaml`
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/luffy-sh-op/LUFFY_PANEL)
+
 1. ریپو را fork کنید یا روی GitHub آپلود کنید.
 2. به [render.com](https://render.com) بروید ← **New Web Service** ← ریپو را متصل کنید.
 3. Render به‌صورت خودکار `render.yaml` را شناسایی و همه چیز را تنظیم می‌کند.
@@ -229,6 +318,62 @@ MIT — use freely, modify as needed.
 | **دستور Build** | `pip install -r requirements.txt` |
 | **دستور Start** | `python main.py` |
 
+### 🌐 Render و آی‌پی‌های تمیز Cloudflare
+
+> **⭐ این پنل روی Render فقط از آی‌پی‌های تمیز Cloudflare استفاده می‌کند.**
+>
+> زیرساخت Render پشت شبکه Cloudflare قرار دارد، بنابراین تمام کانفیگ‌های VLESS+WS به‌صورت خودکار از **آی‌پی‌های تمیز Cloudflare** عبور می‌کنند — که معمولاً آنبلاک و پایدار هستند.
+>
+> ✅ URL پنل را مستقیم استفاده کنید — Cloudflare CDN مسیریابی را خودکار انجام می‌دهد.
+>
+> اگر کانفیگ‌ها وصل نشدند، یک آی‌پی تمیز شناخته‌شده Cloudflare (مثل `104.21.x.x` یا `172.67.x.x`) را در کلاینت خود به جای hostname وارد کنید.
+
+---
+
+## 🚂 استقرار روی Railway
+
+### استقرار یک‌کلیکی
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/luffy-sh-op/LUFFY_PANEL)
+
+1. ریپو را fork کنید یا روی GitHub آپلود کنید.
+2. به [railway.app](https://railway.app) بروید ← **New Project** ← **Deploy from GitHub repo** ← ریپو را انتخاب کنید.
+3.صبر کنید تا deploy شود بعد از deploy یک url به شما داده میشود که ان دامنه سرویس شماست برای ورود به پنل کافیست به اخر دامنه تان /login اضافه کنید.
+
+
+### ⚠️ آی‌پی‌های Railway
+
+> **⭐ Railway از Cloudflare استفاده نمی‌کند و از آی‌پی‌های اختصاصی خودش استفاده می‌کند.**
+>
+> آی‌پی‌های خروجی Railway معمولاً در رنج **`69.46.46.x`** هستند، بنابراین کانفیگ‌های شما از آی‌پی‌های خود Railway عبور می‌کنند — نه از Cloudflare. این آی‌پی‌ها ممکن است بسته به محدودیت‌های شبکه شما در دسترس باشند یا نباشند.
+>
+> **اگر کانفیگ‌ها روی Railway کار نکرد:**
+> 1. بررسی کنید که رنج `69.46.46.x` از شبکه شما در دسترس است.
+> 2. **حالت Fragment را در کلاینت v2ray / v2rayNG فعال کنید** (بخش زیر را ببینید).
+> 3. برای استفاده از آی‌پی‌های تمیز Cloudflare، به Render بروید.
+
+---
+
+## 🔧 فعال‌کردن Fragment Mode (در v2rayNG / v2ray)
+
+اگر کانفیگ‌ها وصل نمی‌شوند — به‌خصوص روی Railway — **حالت Fragment را فعال کنید:**
+
+**v2rayNG (اندروید):**
+1. به **Settings → Fragment** بروید
+2. Fragment را فعال کنید و تنظیم کنید: Packets روی `tlshello`، Length روی `10-30`، Interval روی `10-20`
+3. مجدداً وصل شوید
+
+**v2ray (دسکتاپ):** به `outbound` → `streamSettings` اضافه کنید:
+
+```json
+"sockopt": {
+  "dialerProxy": "fragment",
+  "tcpKeepAliveIdle": 100
+}
+```
+
+حالت Fragment بسته TLS ClientHello را تقسیم می‌کند تا از فایروال‌های DPI عبور کند.
+
 ---
 
 ## ▶️ اجرای محلی
@@ -240,7 +385,7 @@ python main.py
 
 پنل در این آدرس در دسترس است: `http://localhost:8000/login`
 
-> بعد از استقرار روی Render، از این آدرس وارد پنل شوید: `https://yourdomain/login`
+> بعد از استقرار روی Render،Railway از این آدرس وارد پنل شوید: `https://yourdomain/login`
 
 ---
 
@@ -252,7 +397,7 @@ python main.py
 | `SECRET_KEY` | مخفی session و هش (خودکار تولید می‌شود) | تصادفی |
 | `PORT` | پورت سرور | `8000` |
 
-> ⚠️ **قبل از استقرار در محیط عمومی، `ADMIN_PASSWORD` را تغییر دهید.**
+> ⚠️ **بعد از استقرار در محیط عمومی، `ADMIN_PASSWORD` را تغییر دهید.**
 
 ---
 
@@ -265,6 +410,16 @@ websockets==12.0
 httpx==0.25.1
 psutil==5.9.6
 ```
+
+---
+
+## 📌 آی‌پی استاتیک
+
+| پلتفرم | آی‌پی استاتیک؟ | توضیحات |
+|---|---|---|
+| **Render** (رایگان) | ❌ خیر | آی‌پی‌های مشترک Cloudflare؛ تمیز و پایدار |
+| **Render** (پولی) | ✅ بله | از پلان Starter به بالا در دسترس |
+| **Railway** | ✅ اختیاری | از طریق Settings → Networking → Static IP فعال شود (ویژگی پولی) |
 
 ---
 
@@ -342,11 +497,13 @@ vless://<uuid>@<domain>:443?encryption=none&security=tls&type=ws&host=<domain>&p
 - برای ذخیره‌سازی دائمی، نیاز به اضافه کردن دیتابیس (مثلاً SQLite) وجود دارد.
 - تسک keep-alive هر ۱۰ دقیقه به `/health` پینگ می‌زند تا از خواب رفتن سرویس رایگان Render جلوگیری کند.
 
+
 ---
 
 ## 📄 لایسنس
 
 MIT — آزادانه استفاده و ویرایش کنید.
 
+---
 
-[چنل تگراممون](https://t.me/Luffy_sh_op).
+[چنل تلگراممون](https://t.me/Luffy_sh_op)
